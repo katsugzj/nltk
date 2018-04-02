@@ -1,6 +1,0 @@
-<DOC>
-<DOCNO>  ZF109-774-563  <DOCNO>
-<TEXT>
-abstract t3plu network inc introduc two t-3 multiplexor support bandwidth channel t-1 t-3. P the 24,000 five-slot bmx45 includ one cpu card two T3 interfac one primari trunk support T3 backup. P the 30,900 bmx45a support 18 slot includ cpu card t-3 trunk card one high speed data modul redund power supply. P the new multiplexor support one two fulli redund t-3 channel trunk side 56 t-1 28 high-spe data inputs. P To help user manag bmx45 network t3plu offer 5,000 microcomputer-bas manag system run microsoft window 3.0-base graphic interface. P In jul 1991 compani also offer unix-bas system support simpl network manag protocol snmp P thi system allow third-parti snmp manag station monitor control bmx45. M /abstract 
-</TEXT>
-</DOC>
