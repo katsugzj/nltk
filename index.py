@@ -1,15 +1,23 @@
-import re
-import os
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
+from nltk.corpus import PlaintextCorpusReader as PCR
+from nltk import FreqDist
 
-stopWord = list(set(stopwords.words('english')))
-
-def fIndex(path):
-
-    fileList = [eachFile for eachFile in os.listdir(path)]
-
-    index = {}
-
-    for eachFile in fileList:
-        with open(os.path.join(path, eachFile),"r",encoding="UTF-8") as f:
+root = 'D:/nltk/disk12pre'
+wordLists = PCR(root,'.*')
+index = {}
+for fileId in wordLists.fileids():
+    print(fileId)
+    word = wordLists.words(fileId)
+    fDist = FreqDist(word)
+    for item in fDist.keys():
+        if item in index.keys():
+            docnoDist = index[item]
+            docnoDist[fileId] = fDist[item]
+        else:
+            docnoDist = {}
+            docnoDist[fileId] = fDist[item]
+            index[item] = docnoDist
+sortKey = sorted(index.items())
+with open('index',"w",encoding="UTF-8") as f:
+    for item in sortKey:
+        f.write(item[0] + ": ")
+        f.write(str(item[1]) + "\n")
