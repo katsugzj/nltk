@@ -55,59 +55,57 @@ with open(filename,"r",encoding="UTF-8") as f:
                 titleNum = lNum[index].strip()
                 print(titleNum)
                 searchWords = Title[titleNum]
-                #result = {}
-                #with open('D:/course/nltk/index', "r", encoding="UTF-8") as f:
-                #    for line in f:
-                #        key, value = line.strip().split(":", maxsplit=1)
-                #        if key in searchWords:
-                #            qtf = searchWords.count(key)
-                #            valueDic = ast.literal_eval(value.strip())
-                #            df = len(valueDic)
-                #            idf = math.log10((sumDoc + 0.0) / df)
-                #            if key not in result.keys():
-                #                result[key] = qtf * idf
-                #            for eachDoc in valueDic.keys():
-                #                tf = valueDic[eachDoc]
-                #                score = vsm_tfidf(tf,qtf,idf,eachDoc)
-                #                with open('D:/course/nltk/qrels_for_disk12/qrels.151-200.disk1.disk2.part' + str(int(index / 10) + 1), "r", encoding="UTF-8")as rnr:
-                #                    for line in rnr:
-                #                        temp = line.strip().split(' ')
-                #                        if titleNum > temp[0]:
-                #                            break
-                #                        else:
-                #                            if eachDoc == temp[2]:
-                #                                if temp[3] == 1:
-                #                                    result[key] += (0.75 * score)
-                #                                else:
-                #                                    result[key] -= (0.25 * score)
+                result = {}
+                with open('D:/course/nltk/index', "r", encoding="UTF-8") as f:
+                    for line in f:
+                        key, value = line.strip().split(":", maxsplit=1)
+                        if key in searchWords:
+                            qtf = searchWords.count(key)
+                            valueDic = ast.literal_eval(value.strip())
+                            df = len(valueDic)
+                            idf = math.log10((sumDoc + 0.0) / df)
+                            if key not in result.keys():
+                                result[key] = qtf * idf
+                            for eachDoc in valueDic.keys():
+                                tf = valueDic[eachDoc]
+                                score = vsm_tfidf(tf,qtf,idf,eachDoc)
+                                with open('D:/course/nltk/qrels_for_disk12/qrels.151-200.disk1.disk2.part' + str(int(index / 10) + 1), "r", encoding="UTF-8")as rnr:
+                                    for line in rnr:
+                                        temp = line.strip().split(' ')
+                                        if titleNum > temp[0]:
+                                            break
+                                        else:
+                                            if eachDoc == temp[2]:
+                                                if temp[3] == 1:
+                                                    result[key] += (0.75 * score)
+                                                else:
+                                                    result[key] -= (0.25 * score)
                 res = {}
                 with open('D:/course/nltk/index', "r", encoding="UTF-8") as f:
                     for line in f:
                         key, value = line.strip().split(":", maxsplit=1)
-                        for eachLem in wn.lemmas(key):
-                            newKey = eachLem.name()
-                            if newKey in searchWords:
-                                qtf = searchWords.count(key)# * result[key]
-                                valueDic = ast.literal_eval(value.strip())
-                                df = len(valueDic)
-                                idf = math.log10((sumDoc + 0.0) / df)
+                        if key in searchWords:
+                            qtf = searchWords.count(key) * result[key]
+                            valueDic = ast.literal_eval(value.strip())
+                            df = len(valueDic)
+                            idf = math.log10((sumDoc + 0.0) / df)
 
-                                for eachDoc in valueDic.keys():
-                                    tf = valueDic[eachDoc]
+                            for eachDoc in valueDic.keys():
+                                tf = valueDic[eachDoc]
 
-                                    '''TF_IDF'''
-                                    #score = tfidf(tf,idf)
+                                '''TF_IDF'''
+                                #score = tfidf(tf,idf)
 
-                                    '''BM25'''
-                                    #score = bm25(tf,eachDoc)
+                                '''BM25'''
+                                #score = bm25(tf,eachDoc)
 
-                                    '''VSM-TF_IDF'''
-                                    #score = vsm_tfidf(tf,qtf,idf,eachDoc)
+                                '''VSM-TF_IDF'''
+                                #score = vsm_tfidf(tf,qtf,idf,eachDoc)
 
-                                    if eachDoc in res.keys():
-                                        res[eachDoc] += score
-                                    else:
-                                        res[eachDoc] = score
+                                if eachDoc in res.keys():
+                                    res[eachDoc] += score
+                                else:
+                                    res[eachDoc] = score
 
                 rank = sorted(res.items(), key=lambda item: item[1], reverse=True)
                 lenR = len(rank)
