@@ -238,8 +238,8 @@ class T2F:
                     doclen.append(1)
 
         print("append finished")
-        # ln.train(trainX,trainY,doclen)
-        clf.fit(trainX,trainY)
+        ln.train(trainX,trainY,doclen)
+        # clf.fit(trainX,trainY)
         print("fit finished")
 
     def preditct(self):
@@ -256,8 +256,8 @@ class T2F:
         res.sort(key=lambda x:(x[0],x[2]))
         cnt = 1
         temptopic = ""
-        outfile="clf.res"
-        # outfile="listnet.res"
+        # outfile="clf.res"
+        outfile="listnet.res"
         with open(outfile,"w",encoding="UTF-8") as result:
             for each in res:
                 if temptopic==each[0]:
@@ -340,7 +340,7 @@ class listnet():
 
 if __name__ == "__main__":
     t2f = T2F()
-    # ln = listnet()
+    ln = listnet()
     # t2f.pre(rootPath + trainDoc + "CD007394")
     # way=["TFIDF","BM25"]
     # t2f.train2features(ways=way)
